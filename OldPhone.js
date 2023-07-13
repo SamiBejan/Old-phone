@@ -11,6 +11,7 @@ function createKeys() {
         key[i] = new Array(4);
     }
     let keyInd = 0;
+    //We create the phone buttons and draw the associated characters on them.
     for (let i = 1; i < key.length; ++i) {
         const row = document.createElement("tr");
         for (let j = 1; j < key[i].length; ++j) {
@@ -27,6 +28,9 @@ function createKeys() {
 
 function write(e, keyInd) {
     let timeStamp = e.timeStamp;
+    /* We check if the user presses on the same button more than one time within a second.
+    If yes, we scroll until the desired character from the button pressed and display it.
+    If no, we just display the character from the position 1 of the button pressed */
     if (keyInd === prevKeyInd && timeStamp - prevTimeStamp < 1000) {
         ++pressCnt;
         if (pressCnt >= keyPad[keyInd].length) {
@@ -37,6 +41,7 @@ function write(e, keyInd) {
         pressCnt = 1;
         text.innerHTML += keyPad[keyInd][pressCnt];
     }
+    //If the height of the text exceeds the height of the display, we hide the top overflow.
     if (text.clientHeight < text.scrollHeight) {
         text.scrollTop = text.scrollHeight - text.clientHeight;
     }
